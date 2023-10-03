@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的技术与生活——第一篇文章 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/imgs/shortcut-icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/public.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/iconfont.css" />
+  <link rel="stylesheet" href="/css/APlayer.min.css" />
+  <script src="/js/APlayer.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.pjax.min.js"></script>
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    document.title = `我的技术与生活——第一篇文章`
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<style>
+  .load {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(37, 35, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+  .load-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid orange;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 3px orange);
+  }
+  .load-circle-inner {
+    width: 40px;
+    height: 40px;
+    border: 8px solid orange;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse .5s linear infinite;
+  }
+  .load-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orange;
+    display: flex;
+  }
+  .load-text span {
+    margin: 0 5px;
+    text-shadow: 5px 5px 5px orange;
+    animation: move 1s linear infinite;
+  }
+  .load-text span:nth-child(1) {
+    animation-delay: -0.6s;
+  }
+  .load-text span:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .load-text span:nth-child(3) {
+    animation-delay: -0.4s;
+  }
+  .load-text span:nth-child(4) {
+    animation-delay: -0.3s;
+  }
+  .load-text span:nth-child(5) {
+    animation-delay: -0.2s;
+  }
+  .load-text span:nth-child(6) {
+    animation-delay: -0.1s;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes rotate-reverse {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes move {
+    0% { transform: translateY(0%) rotate(0) scale(1); }
+    20% { transform: translateY(20%) rotate(10deg) scale(1.2); }
+    80% { transform: translateY(-10%) rotate(-20deg) scale(.8);}
+    100% { transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  .progress {
+    position: fixed;
+    left: 0; top: 0;
+    width: 0;
+    height: 3px;
+    background-color: green;
+    transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .1s;
+    z-index: 9999;
+  }
+
+  .to-up {
+    animation: toUp .5s 1;
+  }
+  .gray {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    background-color: #000;
+    mix-blend-mode: color;
+  }
+  @keyframes toUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0) ; opacity: 1; }
+  }
+</style>
+<body>
+  <div id="load" class="load">
+    <div class="load-circle">
+      <div class="load-circle-inner"></div>
+    </div>
+    <p class="load-text">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </p>
+  </div>
+  <div id="container" class="container w-100 vh-100" style="display: none;">
+    <header class="header">
+  <div class="header-wrapper">
+    <div class="header-left">
+      <div class="header-search">
+        <input id="search-input" type="text" class="header-search--input" placeholder="请输入要检索的文章标题" />
+        <span id="search-btn" class="header-search--icon"><i class="iconfont icon-sousuo"></i></span>
+      </div>
+      <div id="search-layer" class="header-search--layer hidden">
+        <p class="title">
+          <span>以下是搜索内容：</span>
+          <span id="close-layer-btn">关闭</span>
+        </p>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="header-right">
+      <ul class="header-menu">
+        <li>
+          <a href="http://example.com/">
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+            <span class="header-menu--span">首页</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/log">
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+            <span class="header-menu--span">日志</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/link">
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+            <span class="header-menu--span">友情链接</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/about">
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+            <span class="header-menu--span">关于我</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const ipt = document.querySelector('#search-input')
+  const btn = document.querySelector('#search-btn')
+  const layer = document.querySelector('#search-layer')
+  const posts = JSON.parse(`[{"title":"Hello World","path":"2023/10/03/hello-world/"},{"title":"第一篇文章","path":"2023/10/03/第一篇文章/"}]`)
+  ipt.addEventListener('keyup', e => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  })
+  btn.addEventListener('click', () => {
+    handleSearch()
+  })
+
+  document.querySelector('#close-layer-btn').addEventListener('click', () => {
+    layer.classList.toggle('hidden')
+  })
+
+  function handleSearch() {
+    if (ipt.value.trim() === '') {
+      return
+    }
+    let html = ''
+    const targetPosts = posts.filter(post => post.title.includes(ipt.value))
+    targetPosts.forEach(post => {
+      html += `
+        <li>
+          <div>
+            <a href="/${post.path}">${post.title.replace(new RegExp(ipt.value), `<span>${ipt.value}</span>`)}</a>
+          </div>
+          <img src="${post.cover || '/imgs/default-cover.webp' }" />
+        </li>
+      `
+    })
+    if (html.trim () === '') {
+      html += '<p class="empty">没有搜索到内容</p>'
+    }
+    layer.querySelector('ul').innerHTML = html
+    layer.classList.remove('hidden')
+  }
+</script> 
+    <section id="main" class="main">
+      <div class="main-left-wrapper">
+<div class="main-left">
+  <div class="main-left--block">
+    <div class="main-left--info">
+      <img src="/imgs/avatar.jpg"" class="main-left--avatar" />
+      <div class="main-left--intro">
+        <p class="main-left--name">Safecomputer</p>
+        <div class="main-left--tags">
+          <span class="main-left--tag">中二</span>
+          <span class="main-left--tag">宅</span>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <div class="main-left--motto">
+        <p>“花有重开日，人无再少年”</p>
+        <p>“风雷动，旌旗奋”</p>
+      </div>
+      <div class="main-left--github">
+        <span class="line"></span>
+        <a target="_blank" rel="noopener" href="https://github.com/Aizener"><i class="logo iconfont icon-github-fill"></i></a>
+        <span class="line"></span>
+      </div>
+      <div class="main-left--statics">
+        <a href="/categories">
+          <div>
+            <span>0</span>
+            <span>分类</span>
+          </div>
+        </a>
+        <a href="/tags">
+          <div>
+            <span>0</span>
+            <span>标签</span>
+          </div>
+        </a>
+        <a href="/archives">
+          <div>
+            <span>1 </span>
+            <span>归档</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-left--block">
+    <ul class="main-left--menu">
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">小站首页</span>
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/log">
+            <span class="header-menu--span">个人日志</span>
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/link">
+            <span class="header-menu--span">友情链接</span>
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/about">
+            <span class="header-menu--span">关于自己</span>
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tools">
+            <span class="header-menu--span">我的工具</span>
+            <i class="header-menu--icon iconfont icon-gongju"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="main-left--block">
+    <div class="main-left--site">
+      <h5 class="main-left--title">
+        <span>站点信息</span>
+        <i class="iconfont icon-zhandian"></i>
+      </h5>
+      <p class="main-left--subtitle">
+        <span>文章数目：</span>
+        <span>2 篇</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>最近动态：</span>
+        <span>今天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>上线时间：</span>
+        <span>595天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>当前版本：</span>
+        <span>v1.0.2</span>
+      </p>
+    </div>
+  </div>
+</div></div>
+      <div id="main-container" class="main-container">
+
+
+  <link rel="stylesheet" href="/css/partial/article.css" />
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title">第一篇文章</h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          <div class="article-info--categories">
+            <span>分类：</span>
+            
+          </div>
+          
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            
+          </div>
+          
+          <p class="article-info--date">日期：2023-10-03 17:11:18</p>
+        </div>
+        <img src="/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content markdown-body">
+      <p>兔起鹘落间，迟素随手抓起一只趴伏在树枝上的不知名虫子塞入口中。一咬之下，诡异的味道和恶心的汁水一起盈满口腔。<br>迟素没有时间冥想回复，更没有余暇饱餐痛饮，唯有依靠这样的方式才能在不断的奔逃中恢复一点体力。<br>迟素刚刚起身，方才落足的树上便落下三枚钢针，虽然像是暗器，但力道之大几乎可以截断树木。<br>在树丛间的阴影中倏忽窜出一人，手中钢刀直往迟素背部砍下。迟素宛如早已知道此人运动轨迹般迅速抽剑转身挡下这一击，然而在迟素打算反击时，此人却立刻回身退开。于此同时，又是数枚钢针直往迟素面门袭来。迟素挥剑挡下钢针，方才刺客已然再度没入阴影。<br>迟素暗叹一声，再次起身飞逃，但脚步刚起，他身前偏又落下钢针。为躲避钢针，迟素不得已微调自己逃亡的路径。<br>像这样的追杀和袭扰，自三天前迟素踏出那一家酒家时便持续至今。除了一开始十数人竭尽全力的围杀迫使迟素逃亡，此后的攻击多是这种不痛不痒的一击即走的袭扰和暗器偷袭，犹如猫戏老鼠一般。<br>纵使是一击即退，迟素也能根据身法武器以及身材等诸多蛛丝马迹分辨出三日来负责袭扰自己的绝非一人。算上之前在店家门口围堵自己的那些人，判断纵有误差，但这批人人数绝不会少于十六人。其中九境更是有惊人的十位，剩下六人也至少是八境中的高手。<br>究竟是谁要对自己不利？迟素绝不认为自己有资格让如此多的高手追杀自己。事实上，如果仅仅要杀自己，不要说是否还有隐藏在暗处的高手，仅靠之前围杀的那些人，只要他们付出一半人死伤的代价便可以将自己永远留下。<br>或许是因为不愿意付出这样的代价，所以才要通过不断的追逐磨耗迟素的精气神以求以最底的伤亡一击必杀？<br>迟素没有功夫仔细思考，此刻夜幕降临，他好整以暇的靠在一株大树上闭眼调息。令人意外的是，迟素一停下脚步，敌人一时间竟也没了动静。但其实迟素根本无法完全静心，他的灵觉依然时刻感受着周遭的风吹草动。<br>不过一刻钟功夫，夜幕中便有数枚钢针撕裂空气破风而至，幸亏迟素早有预料，方能险之又险的堪堪避开。这些钢针虽然无法致命，但足够给他留下不轻不重的伤势，这样的伤势在追逐中确是致命的。只是躲开钢针后，迟素依然依靠在大树上闭目调息。<br>敌人的数量很多，所以他们只要分出一人盯着迟素并扰乱他的休憩便可以让己方获得上好的恢复机会。而迟素不仅恢复的效率大大降低，还要时时面临被袭杀的风险，他能恢复的无疑只有元气与肉身，紧绷的神经是完全无法放松的。<br>迟素当然明白这样是给对方轮流好好休息的机会，但纵使是这样觉不完美的休息机会对他来说依然是极其宝贵的，他必须珍惜一丝一毫让自己恢复的机会。<br>皎洁的月亮在夜幕中缓缓西行。闭目的迟素豁然睁开双目，以远超白天的惊人速度在夜幕下的树林中灵活穿行。<br>“赶紧起来！可恶，他为什么还能有这样惊人的速度？”黑暗中负责盯梢的九境强者低声咒骂一声，唤起其他同伙。迟素此刻一瞬间的速度绝对有先前的两倍不止，这样的极限速度无疑有着惊人的消耗，追杀进行到这里迟素依然有如此惊人的元气储备，无论如何都是令人震惊的。<br>“慌什么？他绝对逃不掉的。倒不如先让他放松一下神经，到时再突然出现在他面前，我不信他还能保持心境！”另一人张口说道，迟素现在依然保有暴起加速的能力是在意料之外的事情，这说明若是此时出手，迟素依然有能力斩杀己方几位高手。但让迟素暂时逃离追踪却不一定是坏事，倒不如说如此正合心意。长时间的紧张过后突然放松下来，就在迟素放下警惕之时，他们再忽然出现，通过如此出人意料的一张一弛，自己未必不能拗断迟素的神经。而且现在望去，迟素逃离的方向依然与预定方位相去不远，届时只要再次通过阻拦微调他的方向便可。他想了想，仍是有些不放心，道：“黑爵！紧追着他！但别让他发现！”<br>······<br>晨光熹微。身后的众人完全没有追来的痕迹，纵使是心境沉稳如迟素依然不禁松了一口气。这样恐怖的速度，就连迟素自己也不能维持太久，这样奔逃了仅半夜，带来的消耗就远甚于此前数日。他放慢脚步，随意找了个较为隐秘的所在开始打坐调养。此时神经放松，迟素恢复的速度远非此前可比。此前迟素并非没有骤然提速以期脱离追兵，只是仅仅甩开几里，敌人便会重新衔尾而至。既然一时无法逃脱，敌人又不打算一时便击杀自己，此后迟素便索性以普通的速度和他们保持若即若离的距离。<br>只是迟素不明白，以自己当时甩开几里的距离，在加上自己的气息掩藏，对方根本没道理可以即时追上自己，纵使对方有感受灵觉或者追踪方面的专家，也绝不应该三番五次这样轻易地找到自己。<br>除非……<br>“遭了！”迟素豁然睁开双目，再不能静心恢复。自己绝不应该放松下来！应当做好最坏的打算才是。分明是以极高的速度奔行了一夜，迟素冥想了一个时辰，身体才恢复了大半，却再也不敢放松。在此前可以轻易追上自己，除了对方擅长追踪外分明还有一个可能的选项——自己的身体被动了手脚，以至于对方可以轻易的锁定自己的方位，根本不需要追踪或是搜寻，只要寻着定位跑来便是。如此一来，迟素不断的变更方向与隐藏行迹就几乎成了笑话，不过徒然增加自己消耗罢了。<br>若是如此，便决不能简单的认为一夜的奔逃就可以摆脱定位追踪的范围，自己应当继续离开才是。为何在酒家出来之后对方便开始追踪？想必奥秘的根本便是在酒中。<br>迟素刚刚起身飞驰不过数息，眼前便突然走出一个扛着长枪的男子。“果真如此！这些贼人倒是舍得下本钱！真不知道我迟素到底有什么价值值得你们这样对我上心？”迟素低声呢喃几句，便躲开男子更换方向。对方绝不会真与自己动手交战，既然无法分胜负，自己何必浪费体力？只是再行数息，眼前便又出现一个手持重剑的高大男子。迟素不得不再度避开冲突。只是纵然是迟素，此刻也已经怒气盈盈，这些人战又不战，退又不退，只会使些卑鄙手段，是什么道理？<br>在躲开瞄准自己脚边的数枚钢针后，面对眼前再次出现的手提钢刀的男子时，迟素再不压抑心中的愤怒，霎时提剑在手，以自己“四季剑谣”中的“春生发”起手出招，长剑直刺男子面门。男子将钢刀隔开，转身便要离去。“小贼！你往哪里去？”迟素身形不止，春剑后所接却不是“夏”，而是剑谣中威力与杀机最盛的“冬寂灭”！<br>钢刀男子一时间冷汗直冒，纵使不是直面这一剑，他依然可以感受到背后传来的恐怖气势。自己也许会死。身为八境中的佼佼者，男子自诩面对任何一个九境都有一战之力，可是今日男子心中第一时间冒出的竟然是这样的想法！男子毕竟也是久经战阵的强者，他明白自己若是再不转身迎战，这一击可以确实要了自己性命，于是大喝一声，果断转身以手中钢刀格挡对手长剑。<br>“什么？”男子宛如不可置信般睁大双目，若说之前只是猜测，现在自己却是可以确定自己绝非迟素一合之敌！长剑杀意如虹，威力更是惊人，自己附有元气和卸力手段的钢刀只是阻挡片刻，接触的地方便崩裂开来。只是如此一来，长剑去势微缓，剑路也由是偏了一分，男子更是获得极短的间歇得以调整身形。这恐怖一剑终于是没有要去男子性命，不过削去男子肩头血肉筋骨，如此一来，男子右臂摇摇欲坠，实际已无再战之力。<br>只是迟素一击未能杀敌，又怎会轻易停手？“纳命来吧！”迟素怒喝一声，手中长剑使出剑势最是绵密出招最是迅捷的“夏雨绵”来。男子只得迅速换手以手中残刀勉力支撑，只是男子不善左手剑，身上伤势又是不轻，迟素出剑又是极速，夏雨绵剑招威势又是层层累加，第一剑虽是因追击之故威力不大，但仅仅十余剑后男子便几乎招架不住，气息流转已是有碍，以元气压制的伤口上也不断流出血来。<br>毫无还手之力！<br>“差距怎会如此之大？”男子心中暗自泄气，如此一来，迟素手中长剑更是势如破竹，第十六剑已然完全破开敌手防御网，第十七剑直斩男子胸口！</p>
+
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="2023/10/03/第一篇文章/" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        
+      </div>
+      
+        <div class="catelogue catelogue-2">
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2023/10/03/hello-world/">Hello World</a>
+            </p>
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"appId":"Pf8zCXGEH1qsprnWfikVVujL-gzGzoHsz","appKey":"qOqoiUHhH1TGtLRUYURkLRQX","placeholder":"请留下你宝贵的意见吧~","meta":["nick"],"recordIP":true,"visitor":true,"enableQQ":true}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: '2023/10/03/第一篇文章/'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
+
+</div>
+      <div class="main-right-wrapper"><div class="main-right">
+  <div class="main-right--board">
+    <div class="main-right--title">
+      <h5>公告栏</h5>
+      <i class="iconfont icon-gonggao"></i>
+    </div>
+    <div class="main-right--content">
+       
+    </div>
+  </div>
+
+  <div id="aplayer" class="main-right--music"></div>
+
+  <div class="operate-items">
+    <div class="operate-item backtop">
+      <i class="iconfont icon-huidaodingbu"></i>
+      <span>回到顶部</span>
+    </div>
+    
+    <div class="operate-item turn-comment hidden">
+      <i class="iconfont icon-pinglun"></i>
+      <span>查看评论</span>
+    </div>
+    
+  </div>
+
+  <div class="main-right--site">
+    <div class="main-right--power">
+      <p>Power By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a>.</p>
+      <p>Theme：<a target="_blank" rel="noopener" href="https://github.com/Aizener/hexo-theme-cola">Cola.</a></p>
+    </div>
+    <p class="main-right--refer"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/index">蜀ICP备2022005384号-1</a> </p>
+  </div>
+</div>
+
+<script>
+  function setOperateItem () {
+    const reg = /\d{4}\/\d{2}\/\d{2}\/.+/
+    const path = location.pathname
+    const operateDom = document.querySelector('.main-right .operate-items')
+    const commentDom = document.querySelector('.turn-comment')
+    const cateloguDom = document.querySelector('.article-catelogue > .article-catelogue--wrapper');
+
+    if (commentDom) {
+      if (reg.test(path) || path.match(/\/log\/.+/)) {
+        commentDom.classList.remove('hidden')
+        const newDom = operateDom.cloneNode(true);
+        const _backtopDom = newDom.querySelector('.backtop');
+        const _commentDom = newDom.querySelector('.turn-comment');
+        _backtopDom.addEventListener('click', () => backTopEvent());
+        _commentDom.addEventListener('click', () => commentDomEvent());
+        cateloguDom.appendChild(newDom);
+      } else {
+        commentDom.classList.add('hidden')
+      }
+    }
+  }
+
+  setOperateItem()
+  const musics = JSON.parse(`[{"name":"安河桥","artist":"宋冬野","url":"http://ting6.yymp3.net:82/new25/songdongye/11.mp3","cover":"https://img2.baidu.com/it/u=1260056724,1076343118&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"},{"name":"卡布达","artist":"暂无","url":"music/kabuda.mp3","cover":"https://img2.baidu.com/it/u=705831265,2862720033&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"},{"name":"八连杀","artist":"苏三","url":"music/八连杀.mp3","cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo0SWQx6YrNA8lElaG4OOKLkNkNzLO1PflKg&usqp=CAU"}]`)
+  const ap = new APlayer({
+    container: document.querySelector('#aplayer'),
+    audio: musics,
+  })
+
+  $(document).on('pjax:complete', function() {
+    setOperateItem()
+  })
+
+  document.querySelector('.backtop').addEventListener('click', () => {
+    backTopEvent();
+  })
+  const dom = document.querySelector('.turn-comment')
+  dom && dom.addEventListener('click', () => {
+    commentDomEvent();
+  })
+
+  function backTopEvent() {
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  function commentDomEvent() {
+    const commentDom = document.querySelector('.comments-intro')
+    if (!commentDom) return
+    const top = commentDom.offsetTop, height = commentDom.offsetHeight
+    document.documentElement.scrollTo({
+      top: top - 2 * height,
+      behavior: 'smooth'
+    })
+  }
+</script></div>
+    </section>
+  </div>
+  <div id="progress" class="progress"></div>
+  <div id="gray" class="gray"></div>
+
+  <script>
+    function initScroll () {
+      document.addEventListener('scroll', () => {
+        const doc = document.documentElement
+        const scrollTop = doc.scrollTop
+        const pageHeight = doc.offsetHeight
+        const clientHeight = doc.clientHeight
+        const ratio = scrollTop / (pageHeight - clientHeight)
+        const progress = document.querySelector('#progress')
+        const avatarImg = document.querySelector('.main-left--avatar')
+        progress.style.width = (100 * ratio) + '%'
+        avatarImg.style.transform = `rotate(${360 * ratio}deg)`
+      })
+    }
+
+    const rootPath = "/"
+
+    const checkAndSetArticlePageLayout = () => {
+      const path = location.pathname.replace(rootPath, '');
+      if (
+        /^\/?\d{4}\/\d{2}\/\d{2}\/.*/.test(path) ||
+        /^log\/.+/.test(path)
+      ) {
+        $('.main-container, .main-right, .main-right-wrapper').addClass('is-article')
+      } else {
+        $('.main-container, .main-right, .main-right-wrapper').removeClass('is-article')
+      }
+    }
+
+    const gray = "none"
+    const setGrayStyle = () => {
+      if (gray === 'none') {
+        return
+      } else if (gray === 'index') {
+        location.pathname === '/' ? $('#gray').show() : $('#gray').hide()
+      } else if (gray === 'all') {
+        $('#gray').show()
+      }
+    }
+    setGrayStyle()
+
+
+    window.onload = function () {
+      checkAndSetArticlePageLayout()
+      setTimeout(() => {
+        $('#load').slideUp()
+        $('#container').slideToggle()
+        setTimeout(() => {
+          initScroll();
+        }, 500)
+      }, 500)
+    }
+    
+    let status = 0
+    // 对所有链接跳转事件绑定pjax容器container
+    $(document).pjax('a[target!=_blank]', '#main-container', {
+      container: '#main-container',
+      fragment: '#main-container',
+      timeout: 8000
+    })
+
+    $(document).on('pjax:start', function() {
+    })
+    $(document).on('pjax:complete', function() {
+      status = 0
+      $('.main-container').addClass('to-up').on('animationend', function() {
+        $(this).removeClass('to-up')
+      })
+      setGrayStyle()
+      checkAndSetArticlePageLayout()
+    })
+    $(document).on('pjax:popstate', function() {
+      status = -1
+      checkAndSetArticlePageLayout()
+    });
+  </script>
+</body>
+</html>
